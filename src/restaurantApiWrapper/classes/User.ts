@@ -18,7 +18,7 @@ class User implements UserData {
   public readonly role: 'admin' | 'user';
   constructor(
     userData: UserData,
-    private readonly token?: string
+    public readonly token?: string
   ) {
     this._id = userData._id;
     this.username = userData.username;

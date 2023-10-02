@@ -1,0 +1,73 @@
+nav.side-nav {
+  width: 250px;
+  height: calc(100vh - 50px);
+  position: fixed;
+  top: 50px;
+  right: 0;
+  flex-direction: column;
+  padding: 1rem;
+  background-color: var(--background-primary);
+  color: #fff;
+  overflow: scroll;
+}
+
+nav.side-nav h1 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+nav.side-nav h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+nav.side-nav select {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.25rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  cursor: pointer;
+  transition: 0.1s ease-in-out;
+}
+
+nav.side-nav select:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+nav.side-nav select:focus {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+nav.side-nav select option {
+  background-color: var(--background-primary);
+  color: #fff;
+}
+
+nav.side-nav table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+nav.side-nav table tr {
+  border-bottom: 1px solid #fff;
+  transition: 0.1s ease-in-out;
+}
+
+nav.side-nav table tr:last-child {
+  border-bottom: none;
+}
+
+nav.side-nav table tr:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+nav.side-nav table tr td {
+  padding: 0.5rem 0;
+}
+
+nav.side-nav table tr td:first-child {
+  width: 50%;
+}

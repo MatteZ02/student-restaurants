@@ -17,7 +17,7 @@ export interface RestaurantData {
 
 interface Course {
   name: string;
-  price: string;
+  price: string | undefined;
   diets: string[];
 }
 
@@ -58,22 +58,16 @@ class Restaurant implements RestaurantData {
     this.company = restaurantData.company;
   }
 
-  public async getDailyMenu(
-    restaurantId: string,
-    lang: 'en' | 'fi' = 'fi'
-  ): Promise<DailyMenu> {
+  public async getDailyMenu(lang: 'en' | 'fi' = 'fi'): Promise<DailyMenu> {
     const dailyMenu = await requestHandler.get<DailyMenu>(
-      `restaurants/daily/${restaurantId}/${lang}`
+      `restaurants/daily/${this._id}/${lang}`
     );
     return dailyMenu;
   }
 
-  public async getWeeklyMenu(
-    restaurantId: string,
-    lang: 'en' | 'fi' = 'fi'
-  ): Promise<WeeklyMenu> {
+  public async getWeeklyMenu(lang: 'en' | 'fi' = 'fi'): Promise<WeeklyMenu> {
     const weeklyMenu = await requestHandler.get<WeeklyMenu>(
-      `restaurants/weekly/${restaurantId}/${lang}`
+      `restaurants/weekly/${this._id}/${lang}`
     );
     return weeklyMenu;
   }

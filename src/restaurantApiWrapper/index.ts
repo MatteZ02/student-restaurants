@@ -5,15 +5,18 @@ import requestHandler from './core/requestHandler';
 interface LoginReturnData {
   message: string;
   token: string;
-  user: UserData;
+  data: UserData;
 }
 
 class RestaurantApiWrapper {
   constructor() {}
 
   public async getRestaurants(): Promise<Restaurants> {
-    const restaurants =
-      await requestHandler.get<RestaurantData[]>(`restaurants`);
+    const restaurants = await requestHandler
+      .get<RestaurantData[]>(`restaurants`)
+      .catch(err => {
+        throw new Error(err.message);
+      });
     return restaurants.map<Restaurant>(
       restaurant => new Restaurant(restaurant)
     );
@@ -30,11 +33,12 @@ class RestaurantApiWrapper {
     username: string;
     password: string;
   }): Promise<User> {
-    const loginData = await requestHandler.post<LoginReturnData>(
-      'auth/login',
-      credentials
-    );
-    return new User(loginData.user, loginData.token);
+    const loginData = await requestHandler
+      .post<LoginReturnData>('auth/login', credentials)
+      .catch(err => {
+        throw new Error(err.message);
+      });
+    return new User(loginData.data, loginData.token);
   }
 
   public async register(credentials: {
@@ -46,16 +50,17 @@ class RestaurantApiWrapper {
       'users',
       credentials
     );
-    return new User(loginData.user);
+    return new User(loginData.data);
   }
 
   public async getUser(token: string) {
-    const userData = await requestHandler.get<UserData>('users', {
-      'Content-type': 'application/json',
-      Authorization: `Bearer ${token}`,
+    const userData = await requestHandler.get<UserData>(`users/token`, {
+      'Content-Type': 'application/json',
+      authorization: `Bearer ${token}`,
     });
     return new User(userData, token);
   }
 }
 
 export default RestaurantApiWrapper;
+export {Restaurant, User};
