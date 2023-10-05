@@ -1,21 +1,19 @@
 import * as leaflet from 'leaflet';
-import RestaurantApiWrapper, {Restaurant, User} from './restaurantApiWrapper';
+import RestaurantApiWrapper, {User} from './restaurantApiWrapper';
 import {getCurrentLocation} from './functions/getCurrentLocation';
-import {restaurantTableRowComponent} from './components/restaurantTableRowComponent';
-import {restaurantModalComponent} from './components/restaurantModalComponent';
 import {filterRestaurants} from './functions/filterRestaurants';
-import {Restaurants} from './restaurantApiWrapper/classes/Restaurant';
-import {loggedIn, login} from './functions/login';
+import {loggedIn} from './functions/login';
 import config from './config';
+import {showRestaurants} from './functions/showRestaurants';
+import {loginModalController} from './controllers/loginModalController';
+import {restaurantModalController} from './controllers/restaurantModalController';
+import {registerModalController} from './controllers/registerModalController';
+import {userModalController} from './controllers/userModalController';
 
 const restaurantApiWrapper = new RestaurantApiWrapper();
 const map = leaflet.map('map');
-const marker_alt = new leaflet.Icon({
-  iconUrl: '/icons/marker-alt.png',
-});
-const marker_default = new leaflet.Icon.Default();
 const theme = localStorage.getItem('theme');
-if (!theme) localStorage.setItem('data-theme', 'light');
+if (!theme) localStorage.setItem('theme', 'light');
 const themeButton = document.getElementById('theme') as HTMLButtonElement;
 themeButton.innerText = theme === 'dark' ? 'light_mode' : 'dark_mode';
 if (theme === 'dark')
@@ -68,71 +66,6 @@ const closeDialog = (dialog: HTMLDialogElement) => {
   dialog.removeEventListener('keydown', e => trapFocus(e, dialog));
 };
 
-const openRestaurantModal = (restaurant: Restaurant) => {
-  const dialog = document.getElementById(
-    'restaurantModal'
-  ) as HTMLDialogElement;
-  restaurantModalComponent(dialog, restaurant);
-  openDialog(dialog);
-};
-
-const showRestaurants = (
-  restaurants: Restaurants,
-  location: GeolocationPosition
-) => {
-  const {latitude, longitude} = location.coords;
-
-  restaurants.sort((a, b) => {
-    const aDistance = leaflet
-      .latLng(latitude, longitude)
-      .distanceTo(
-        leaflet.latLng(a.location.coordinates[1], a.location.coordinates[0])
-      );
-    const bDistance = leaflet
-      .latLng(latitude, longitude)
-      .distanceTo(
-        leaflet.latLng(b.location.coordinates[1], b.location.coordinates[0])
-      );
-    return aDistance - bDistance;
-  });
-
-  restaurants.forEach(restaurant => {
-    const [longitude, latitude] = restaurant.location.coordinates;
-    const marker = leaflet.marker([latitude, longitude]).addTo(map);
-    marker.addEventListener('mouseover', () => {
-      marker.bindPopup(restaurant.name).openPopup();
-      const restaurantTableRowElement = document.getElementById(restaurant._id);
-      restaurantTableRowElement?.classList.add('highlight');
-      restaurantTableRowElement?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      });
-    });
-    marker.addEventListener('mouseout', () => {
-      marker.closePopup();
-      document.getElementById(restaurant._id)?.classList.remove('highlight');
-    });
-    marker.addEventListener('click', () => {
-      openRestaurantModal(restaurant);
-    });
-
-    const restaurantTableRow = restaurantTableRowComponent(restaurant);
-    restaurantTableRow.addEventListener('click', () => {
-      map.setView([latitude, longitude], 15);
-      openRestaurantModal(restaurant);
-    });
-    restaurantTableRow.addEventListener('mouseover', () =>
-      marker.setIcon(marker_alt)
-    );
-    restaurantTableRow.addEventListener('mouseout', () =>
-      marker.setIcon(marker_default)
-    );
-
-    const restaurantList = document.getElementById('restaurantList');
-    restaurantList?.appendChild(restaurantTableRow);
-  });
-};
-
 leaflet
   .tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -158,8 +91,16 @@ leaflet
 
   if (user) {
     const avatar = document.getElementById('avatar') as HTMLImageElement;
+    if (!avatar) return;
     avatar.classList.remove('hidden');
     avatar.src = config.uploadUrl + user.avatar;
+    avatar.addEventListener('click', () =>
+      openDialog(document.getElementById('userModal') as HTMLDialogElement)
+    );
+    const username = document.getElementById('username');
+    if (!username) return;
+    username.classList.remove('hidden');
+    username.innerText = user.username;
   }
 
   const filter = document.getElementById('filter') as
@@ -175,46 +116,25 @@ leaflet
     });
     showRestaurants(
       filterRestaurants(restaurants, filter?.value ?? 'none'),
-      location
+      location,
+      user
     );
   });
-  showRestaurants(restaurants, location);
+  showRestaurants(restaurants, location, user);
 })();
 
-// Modals
+// modals
 const restaurantModal = document.getElementById(
   'restaurantModal'
 ) as HTMLDialogElement;
-restaurantModal.addEventListener(
-  'close',
-  () => (restaurantModal.innerHTML = '')
-);
-const restaurantModalCloseButton = document.getElementById(
-  'restaurantModalClose'
-);
-restaurantModalCloseButton?.addEventListener('click', () => {
-  if (!restaurantModal) return;
-  closeDialog(restaurantModal);
-});
-
+restaurantModalController(restaurantModal);
 const loginModal = document.getElementById('loginModal') as HTMLDialogElement;
-const loginButton = document.getElementById('login');
-loginButton?.addEventListener('click', () => openDialog(loginModal));
-const loginModalCloseButton = document.getElementById(
-  'loginModalClose'
-) as HTMLButtonElement;
-loginModalCloseButton?.addEventListener('click', () => closeDialog(loginModal));
-const loginForm = document.getElementById('loginForm') as HTMLFormElement;
-loginForm.addEventListener('submit', async e => {
-  e.preventDefault();
-  const user = await login(new FormData(loginForm)).catch(err => {
-    const loginError = document.getElementById('loginError');
-    loginError?.classList.remove('hidden');
-    console.error(err);
-  });
-  if (!user) return;
-  closeDialog(loginModal);
-  loggedIn(user);
-});
+loginModalController(loginModal);
+const registerModal = document.getElementById(
+  'registerModal'
+) as HTMLDialogElement;
+registerModalController(registerModal);
+const userModal = document.getElementById('userModal') as HTMLDialogElement;
+userModalController(userModal);
 
-export {openDialog, closeDialog, restaurantApiWrapper};
+export {openDialog, closeDialog, restaurantApiWrapper, map};

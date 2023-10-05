@@ -1,6 +1,10 @@
-import {Restaurant} from '../restaurantApiWrapper';
+import {favoriteRestaurant} from '../functions/favoriteRestaurant';
+import {Restaurant, User} from '../restaurantApiWrapper';
 
-const restaurantTableRowComponent = (restaurant: Restaurant): HTMLElement => {
+const restaurantListComponent = (
+  restaurant: Restaurant,
+  user: User | null = null
+): HTMLElement => {
   const restaurantItem = document.createElement('div');
   restaurantItem.classList.add('restaurant');
   restaurantItem.setAttribute('id', restaurant._id);
@@ -10,7 +14,10 @@ const restaurantTableRowComponent = (restaurant: Restaurant): HTMLElement => {
   const address = document.createElement('h4');
   const favorite = document.createElement('span');
   favorite.classList.add('material-symbols-outlined');
+  favorite.addEventListener('click', () => favoriteRestaurant(restaurant));
   favorite.innerText = 'star';
+  if (user?.favouriteRestaurant === restaurant._id)
+    restaurantItem.classList.add('favorite');
   name.innerText = restaurant.name;
   address.innerText = restaurant.address;
   content.appendChild(name);
@@ -20,4 +27,4 @@ const restaurantTableRowComponent = (restaurant: Restaurant): HTMLElement => {
   return restaurantItem;
 };
 
-export {restaurantTableRowComponent};
+export {restaurantListComponent};

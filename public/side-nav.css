@@ -59,6 +59,7 @@ nav.side-nav #restaurantList .restaurant {
   padding: 0 0.5rem;
   border-bottom: 1px solid var(--background-alt);
   transition: 0.1s ease-in-out;
+  cursor: pointer;
 }
 
 nav.side-nav #restaurantList .restaurant:last-child {
@@ -71,4 +72,8 @@ nav.side-nav #restaurantList .restaurant:hover {
 
 nav.side-nav #restaurantList .restaurant .content {
   padding: 0.5rem 0;
+}
+
+nav.side-nav #restaurantList .restaurant.favorite span {
+  color: yellow;
 }

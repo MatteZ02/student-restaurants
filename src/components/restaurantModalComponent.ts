@@ -50,6 +50,7 @@ const restaurantModalComponent = (
   dialog: HTMLDialogElement,
   restaurant: Restaurant
 ): HTMLDialogElement => {
+  dialog.innerHTML = '';
   const name = document.createElement('h2');
   name.innerText = restaurant.name;
   const address = document.createElement('h3');

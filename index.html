@@ -32,6 +32,7 @@
         <span class="material-symbols-outlined" id="logo"> logo </span>
       </div>
       <div class="nav-right">
+        <h3 id="username" class="hidden">username</h3>
         <img alt="profile-picture" id="avatar" class="hidden" />
         <span class="material-symbols-outlined" id="login"> login </span>
         <span class="material-symbols-outlined hidden" id="logout">
@@ -58,13 +59,46 @@
         <p>Invalid username or password</p>
       </div>
       <form id="loginForm" action="POST">
-        <label for="username">Username</label>
-        <input type="text" name="username" id="username" required />
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" required />
+        <label for="usernamel">Username</label>
+        <input type="text" name="username" id="usernamel" required />
+        <label for="passwordl">Password</label>
+        <input type="password" name="password" id="passwordl" required />
         <button type="submit">Login</button>
       </form>
+      <h5 id="register">No account? Click here to register</h5>
       <button id="loginModalClose">Close</button>
+    </dialog>
+
+    <dialog id="registerModal">
+      <div id="registerError" class="hidden">
+        <p>Invalid username or password</p>
+      </div>
+      <form id="registerForm" action="POST">
+        <label for="usernamer">Username</label>
+        <input type="text" name="username" id="usernamer" required />
+        <label for="emailr">Email</label>
+        <input type="email" name="email" id="emailr" required />
+        <label for="passwordr">Password</label>
+        <input type="password" name="password" id="passwordr" required />
+        <button type="submit">Register</button>
+      </form>
+      <button id="registerModalClose">Close</button>
+    </dialog>
+
+    <dialog id="userModal">
+      <div id="updateError" class="hidden">
+        <p>Invalid username or password</p>
+      </div>
+      <form id="userForm" action="POST">
+        <label for="usernameu">Username</label>
+        <input type="text" name="username" id="usernameu" required />
+        <label for="emailu">Email</label>
+        <input type="email" name="email" id="emailu" required />
+        <label for="avataru">Avatar</label>
+        <input type="file" , name="avatar" id="avataru" />
+        <button type="submit">Save</button>
+      </form>
+      <button id="userModalClose">Close</button>
     </dialog>
   </body>
 </html>

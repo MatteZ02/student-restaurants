@@ -8,6 +8,12 @@ interface LoginReturnData {
   data: UserData;
 }
 
+interface RegisterReturnData {
+  message: string;
+  data: UserData;
+  activationUrl: string;
+}
+
 class RestaurantApiWrapper {
   constructor() {}
 
@@ -45,12 +51,15 @@ class RestaurantApiWrapper {
     username: string;
     email: string;
     password: string;
-  }): Promise<User> {
-    const loginData = await requestHandler.post<Omit<LoginReturnData, 'token'>>(
+  }): Promise<{user: User; activationUrl: string}> {
+    const registerData = await requestHandler.post<RegisterReturnData>(
       'users',
       credentials
     );
-    return new User(loginData.data);
+    return {
+      user: new User(registerData.data),
+      activationUrl: registerData.activationUrl,
+    };
   }
 
   public async getUser(token: string) {

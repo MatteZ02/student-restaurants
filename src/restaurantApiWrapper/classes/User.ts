@@ -29,30 +29,42 @@ class User implements UserData {
   }
 
   public async update(data: Partial<UserData>): Promise<User> {
-    const user = await requestHandler.put<UserData>(`users`, data, {
-      'Content-type': 'application/json',
-      Authorization: `Bearer ${this.token}`,
-    });
+    const user = await requestHandler
+      .put<UserData>(`users`, data, {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${this.token}`,
+      })
+      .catch(err => {
+        throw new Error(err.message);
+      });
     return new User(user);
   }
 
   public async delete(): Promise<UserData> {
-    const req = await requestHandler.delete<{
-      message: string;
-      data: UserData;
-    }>(`users`);
+    const req = await requestHandler
+      .delete<{
+        message: string;
+        data: UserData;
+      }>(`users`)
+      .catch(err => {
+        throw new Error(err.message);
+      });
     return req.data;
   }
 
   public async uploadAvatar(file: File): Promise<UserData> {
     const formData = new FormData();
     formData.append('avatar', file);
-    const req = await requestHandler.post<{
-      message: string;
-      data: UserData;
-    }>(`users/avatar`, formData, {
-      Authorization: `Bearer ${this.token}`,
-    });
+    const req = await requestHandler
+      .post<{
+        message: string;
+        data: UserData;
+      }>(`users/avatar`, formData, {
+        Authorization: `Bearer ${this.token}`,
+      })
+      .catch(err => {
+        throw new Error(err.message);
+      });
     return req.data;
   }
 }
