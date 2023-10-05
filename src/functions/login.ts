@@ -18,13 +18,13 @@ const loggedIn = async (user: User) => {
   loginButton?.classList.add('hidden');
   const logoutButton = document.getElementById('logout');
   logoutButton?.classList.remove('hidden');
-  const userButton = document.getElementById('user');
-  userButton?.classList.remove('hidden');
+  const avatarButton = document.getElementById('avatar');
+  avatarButton?.classList.remove('hidden');
 
   logoutButton?.addEventListener('click', () => {
     logoutButton?.classList.add('hidden');
     loginButton?.classList.remove('hidden');
-    userButton?.classList.add('hidden');
+    avatarButton?.classList.add('hidden');
     localStorage.removeItem('token');
   });
 };

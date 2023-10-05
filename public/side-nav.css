@@ -1,3 +1,5 @@
+@import './master.css';
+
 nav.side-nav {
   width: 250px;
   height: calc(100vh - 50px);
@@ -6,8 +8,6 @@ nav.side-nav {
   right: 0;
   flex-direction: column;
   padding: 1rem;
-  background-color: var(--background-primary);
-  color: #fff;
   overflow: scroll;
 }
 
@@ -27,47 +27,48 @@ nav.side-nav select {
   padding: 0.5rem;
   border: none;
   border-radius: 0.25rem;
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #fff;
+  background-color: var(--background-alt);
+  color: var(--text-primary);
   cursor: pointer;
   transition: 0.1s ease-in-out;
 }
 
 nav.side-nav select:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: var(--background-alt);
 }
 
 nav.side-nav select:focus {
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: var(--background-alt);
 }
 
 nav.side-nav select option {
-  background-color: var(--background-primary);
-  color: #fff;
+  background-color: var(--background-alt);
+  color: var(--text-primary);
 }
 
-nav.side-nav table {
+nav.side-nav #restaurantList {
   width: 100%;
   border-collapse: collapse;
 }
 
-nav.side-nav table tr {
-  border-bottom: 1px solid #fff;
+nav.side-nav #restaurantList .restaurant {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  padding: 0 0.5rem;
+  border-bottom: 1px solid var(--background-alt);
   transition: 0.1s ease-in-out;
 }
 
-nav.side-nav table tr:last-child {
+nav.side-nav #restaurantList .restaurant:last-child {
   border-bottom: none;
 }
 
-nav.side-nav table tr:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+nav.side-nav #restaurantList .restaurant:hover {
+  background-color: var(--background-alt);
 }
 
-nav.side-nav table tr td {
+nav.side-nav #restaurantList .restaurant .content {
   padding: 0.5rem 0;
-}
-
-nav.side-nav table tr td:first-child {
-  width: 50%;
 }

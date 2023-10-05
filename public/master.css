@@ -1,0 +1,13 @@
+:root {
+  --background-primary: #fff;
+  --background-alt: #949494;
+  --text-primary: #333;
+  --text-alt: #666;
+}
+
+[data-theme='dark'] {
+  --background-primary: #333;
+  --background-alt: #252525;
+  --text-primary: #fff;
+  --text-alt: #8594ad;
+}

@@ -1,3 +1,5 @@
+import config from '../../config';
+
 type Endpoint =
   | 'restaurants'
   | `restaurants/daily/${string}/${string}`
@@ -11,8 +13,7 @@ type Endpoint =
   | 'auth/login';
 
 class requestHandler {
-  private static readonly _url =
-    'https://student-restaurants.azurewebsites.net/api/v1/';
+  private static readonly _url = config.apiUrl;
   constructor() {}
 
   public static async get<T>(

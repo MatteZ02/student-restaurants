@@ -6,6 +6,7 @@ import {restaurantModalComponent} from './components/restaurantModalComponent';
 import {filterRestaurants} from './functions/filterRestaurants';
 import {Restaurants} from './restaurantApiWrapper/classes/Restaurant';
 import {loggedIn, login} from './functions/login';
+import config from './config';
 
 const restaurantApiWrapper = new RestaurantApiWrapper();
 const map = leaflet.map('map');
@@ -13,6 +14,30 @@ const marker_alt = new leaflet.Icon({
   iconUrl: '/icons/marker-alt.png',
 });
 const marker_default = new leaflet.Icon.Default();
+const theme = localStorage.getItem('theme');
+if (!theme) localStorage.setItem('data-theme', 'light');
+const themeButton = document.getElementById('theme') as HTMLButtonElement;
+themeButton.innerText = theme === 'dark' ? 'light_mode' : 'dark_mode';
+if (theme === 'dark')
+  document.documentElement.setAttribute('data-theme', 'dark');
+
+const toggleTheme = () => {
+  const theme = localStorage.getItem('theme');
+  switch (theme) {
+    case 'light':
+      themeButton.innerText = 'light_mode';
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+      break;
+    case 'dark':
+      themeButton.innerText = 'dark_mode';
+      document.documentElement.setAttribute('data-theme', 'light');
+      localStorage.setItem('theme', 'light');
+      break;
+  }
+};
+
+document.getElementById('theme')?.addEventListener('click', toggleTheme);
 
 const trapFocus = (e: KeyboardEvent, dialog: HTMLDialogElement) => {
   const elements = dialog.querySelectorAll(
@@ -32,6 +57,7 @@ const trapFocus = (e: KeyboardEvent, dialog: HTMLDialogElement) => {
     }
   }
 };
+
 const openDialog = (dialog: HTMLDialogElement) => {
   dialog.showModal();
   dialog.addEventListener('keydown', e => trapFocus(e, dialog));
@@ -129,6 +155,12 @@ leaflet
   const location = await getCurrentLocation();
   const {latitude, longitude} = location.coords;
   map.setView([latitude, longitude], 10);
+
+  if (user) {
+    const avatar = document.getElementById('avatar') as HTMLImageElement;
+    avatar.classList.remove('hidden');
+    avatar.src = config.uploadUrl + user.avatar;
+  }
 
   const filter = document.getElementById('filter') as
     | HTMLSelectElement

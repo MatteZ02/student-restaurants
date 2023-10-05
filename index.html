@@ -26,12 +26,13 @@
   <body>
     <nav class="top-nav">
       <div class="nav-left">
-        <span class="material-symbols-outlined" id="menu"> menu </span>
+        <span class="material-symbols-outlined" id="theme"> dark_mode </span>
       </div>
       <div class="nav-center">
         <span class="material-symbols-outlined" id="logo"> logo </span>
       </div>
       <div class="nav-right">
+        <img alt="profile-picture" id="avatar" class="hidden" />
         <span class="material-symbols-outlined" id="login"> login </span>
         <span class="material-symbols-outlined hidden" id="logout">
           logout
@@ -45,7 +46,7 @@
         <option value="sodexo">Sodexo</option>
         <option value="compass">Compass Group</option>
       </select>
-      <table id="restaurantList"></table>
+      <div id="restaurantList"></div>
     </nav>
 
     <div id="map"></div>
