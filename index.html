@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Feastly</title>
     <script src="src/main.ts" type="module"></script>
+    <link rel="icon" type="image/x-icon" href="/img/favicon.png" />
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -29,7 +30,7 @@
         <span class="material-symbols-outlined" id="theme"> dark_mode </span>
       </div>
       <div class="nav-center">
-        <span class="material-symbols-outlined" id="logo"> logo </span>
+        <img src="/img/logo.png" alt="feastly logo" />
       </div>
       <div class="nav-right">
         <h3 id="username" class="hidden">username</h3>
@@ -41,6 +42,9 @@
       </div>
     </nav>
     <nav class="side-nav">
+      <span class="material-symbols-outlined hidden" id="side-nav-arrow">
+        arrow_back
+      </span>
       <h1>Restaurants</h1>
       <select name="filter" id="filter">
         <option value="none">All</option>

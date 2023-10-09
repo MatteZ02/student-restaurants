@@ -9,6 +9,14 @@ nav.side-nav {
   flex-direction: column;
   padding: 1rem;
   overflow: scroll;
+  transition: 0.2s;
+}
+
+nav.side-nav span#side-nav-arrow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: calc(100vh - 50px);
 }
 
 nav.side-nav h1 {
@@ -76,4 +84,26 @@ nav.side-nav #restaurantList .restaurant .content {
 
 nav.side-nav #restaurantList .restaurant.favorite span {
   color: yellow;
+}
+
+@media only screen and (max-width: 600px) {
+  nav.side-nav[open='true'] {
+    width: 100%;
+  }
+
+  nav.side-nav:not([open='true']) {
+    width: 2rem;
+    overflow: hidden;
+  }
+
+  nav.side-nav:not([open='true']) * {
+    display: none;
+  }
+
+  nav.side-nav span#side-nav-arrow {
+    display: block;
+  }
+}
+
+@media only screen and (max-width: 182px) {
 }

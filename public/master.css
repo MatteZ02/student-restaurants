@@ -12,3 +12,29 @@
   --text-primary: #fff;
   --text-alt: #8594ad;
 }
+
+@font-face {
+  font-family: 'FiraSans-Regular';
+  src: url('/fonts/FiraSans-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'FiraSans-Bold';
+  src: url('/fonts/FiraSans-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'FiraSans-Light';
+  src: url('/fonts/FiraSans-Light.ttf');
+}
+
+@font-face {
+  font-family: 'FiraSans-Medium';
+  src: url('/fonts/FiraSans-Medium.ttf');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

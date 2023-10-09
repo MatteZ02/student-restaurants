@@ -36,6 +36,34 @@ const toggleTheme = () => {
 
 document.getElementById('theme')?.addEventListener('click', toggleTheme);
 
+const mapElement = document.getElementById('map');
+const sideNav = document.getElementsByClassName('side-nav')[0];
+const sideNavButton = document.getElementById('side-nav-arrow');
+sideNavButton?.addEventListener('click', () => {
+  const open = sideNav?.getAttribute('open');
+  switch (open) {
+    case 'true':
+      sideNav?.removeAttribute('open');
+      mapElement?.classList.remove('hidden');
+      sideNavButton!.innerText = 'arrow_back';
+      break;
+    default:
+      sideNav?.setAttribute('open', 'true');
+      mapElement?.classList.add('hidden');
+      sideNavButton!.innerText = 'arrow_forward';
+      break;
+  }
+});
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 600) {
+    sideNav?.removeAttribute('open');
+    mapElement?.classList.remove('hidden');
+    sideNavButton!.innerText = 'arrow_back';
+    sideNavButton?.classList.add('hidden');
+  }
+});
+
 const trapFocus = (e: KeyboardEvent, dialog: HTMLDialogElement) => {
   const elements = dialog.querySelectorAll(
     'a, button, input, textarea, select, details, [tabindex]:not([tabindex="-1"])'
