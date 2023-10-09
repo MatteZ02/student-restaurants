@@ -20,10 +20,10 @@ const openRestaurantModal = (restaurant: Restaurant) => {
 
 const showRestaurants = (
   restaurants: Restaurants,
-  location: GeolocationPosition,
+  coords: {longitude: number; latitude: number},
   user: User | null = null
 ) => {
-  const {latitude, longitude} = location.coords;
+  const {latitude, longitude} = coords;
 
   restaurants.sort((a, b) => {
     const aDistance = leaflet

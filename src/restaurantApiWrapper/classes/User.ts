@@ -4,8 +4,8 @@ export interface UserData {
   _id: string;
   username: string;
   email: string;
-  favouriteRestaurant: string;
-  avatar: string;
+  favouriteRestaurant?: string;
+  avatar?: string;
   role: 'admin' | 'user';
 }
 
@@ -13,8 +13,8 @@ class User implements UserData {
   public readonly _id: string;
   public readonly username: string;
   public readonly email: string;
-  public readonly favouriteRestaurant: string;
-  public readonly avatar: string;
+  public readonly favouriteRestaurant?: string;
+  public readonly avatar?: string;
   public readonly role: 'admin' | 'user';
   constructor(
     userData: UserData,
@@ -30,14 +30,14 @@ class User implements UserData {
 
   public async update(data: Partial<UserData>): Promise<User> {
     const user = await requestHandler
-      .put<UserData>(`users`, data, {
+      .put<{message: string; data: UserData}>(`users`, data, {
         'Content-type': 'application/json',
         Authorization: `Bearer ${this.token}`,
       })
       .catch(err => {
         throw new Error(err.message);
       });
-    return new User(user);
+    return new User(user.data);
   }
 
   public async delete(): Promise<UserData> {

@@ -9,6 +9,11 @@ const userModalController = async (userModal: HTMLDialogElement) => {
   userForm.username.value = user.username;
   userForm.email.value = user.email;
 
+  const userModalCloseButton = document.getElementById(
+    'userModalClose'
+  ) as HTMLButtonElement;
+  userModalCloseButton?.addEventListener('click', () => userModal.close());
+
   userForm.addEventListener('submit', async event => {
     event.preventDefault();
     const error = document.getElementById('updateError');
@@ -29,8 +34,8 @@ const userModalController = async (userModal: HTMLDialogElement) => {
         error.classList.remove('hidden');
       });
     if (!!avatar?.size) user.uploadAvatar(avatar);
-    if (user.token) localStorage.setItem('token', user.token);
     if (updatedUser) {
+      if (updatedUser.token) localStorage.setItem('token', updatedUser.token);
       loggedIn(updatedUser);
       userModal.close();
       error?.classList.add('hidden');

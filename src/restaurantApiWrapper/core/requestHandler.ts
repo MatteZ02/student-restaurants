@@ -20,72 +20,68 @@ class requestHandler {
     endpoint: Endpoint,
     headers: HeadersInit = {'Content-Type': 'application/json'}
   ): Promise<T> {
-    const options = {
+    const options: RequestInit = {
       method: 'GET',
       headers,
     };
-    const restaurants = await this.fetch<T>(
-      this._url + endpoint,
-      options
-    ).catch(err => {
-      throw new Error(err);
-    });
-    return restaurants;
+    const req = await this.fetch<T>(this._url + endpoint, options).catch(
+      err => {
+        throw new Error(err);
+      }
+    );
+    return req;
   }
 
   public static async post<T>(
     endpoint: Endpoint,
-    body: any,
+    body: any | FormData,
     headers: HeadersInit = {'Content-Type': 'application/json'}
   ): Promise<T> {
-    const options = {
+    const options: RequestInit = {
       method: 'POST',
       headers,
-      body: JSON.stringify(body),
+      body: body instanceof FormData ? body : JSON.stringify(body),
     };
-    const restaurants = await this.fetch<T>(
-      this._url + endpoint,
-      options
-    ).catch(err => {
-      throw new Error(err);
-    });
-    return restaurants;
+    const req = await this.fetch<T>(this._url + endpoint, options).catch(
+      err => {
+        throw new Error(err);
+      }
+    );
+    return req;
   }
 
   public static async put<T>(
     endpoint: Endpoint,
-    body: any,
+    body: any | FormData,
     headers: HeadersInit = {'Content-Type': 'application/json'}
   ): Promise<T> {
-    const options = {
+    const options: RequestInit = {
       method: 'PUT',
       headers,
       body: JSON.stringify(body),
     };
-    const restaurants = await this.fetch<T>(
-      this._url + endpoint,
-      options
-    ).catch(err => {
-      throw new Error(err);
-    });
-    return restaurants;
+    const req = await this.fetch<T>(this._url + endpoint, options).catch(
+      err => {
+        throw new Error(err);
+      }
+    );
+    return req;
   }
 
   public static async delete<T>(endpoint: Endpoint): Promise<T> {
-    const options = {
+    const options: RequestInit = {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
         authorization: `Bearer ${localStorage.getItem('token')}`,
       },
     };
-    const restaurants = await this.fetch<T>(
-      this._url + endpoint,
-      options
-    ).catch(err => {
-      throw new Error(err);
-    });
-    return restaurants;
+    const req = await this.fetch<T>(this._url + endpoint, options).catch(
+      err => {
+        throw new Error(err);
+      }
+    );
+    return req;
   }
 
   private static async fetch<T>(
@@ -93,10 +89,8 @@ class requestHandler {
     options?: RequestInit
   ): Promise<T> {
     const req = await fetch(url, options);
-    if (req.status < 200 || req.status > 299)
-      throw new Error(req.status.toString());
-
     const json = await req.json();
+    if (req.status < 200 || req.status > 299) throw new Error(json.message);
 
     return json;
   }

@@ -1,4 +1,5 @@
-import {restaurantApiWrapper} from '../main';
+import config from '../config';
+import {openDialog, restaurantApiWrapper} from '../main';
 import {User} from '../restaurantApiWrapper';
 
 const login = async (formData: FormData): Promise<User> => {
@@ -18,9 +19,16 @@ const loggedIn = async (user: User) => {
   loginButton?.classList.add('hidden');
   const logoutButton = document.getElementById('logout');
   logoutButton?.classList.remove('hidden');
-  const avatar = document.getElementById('avatar');
+  const avatar = document.getElementById('avatar') as HTMLImageElement;
+  avatar.src = user.avatar
+    ? config.uploadUrl + user.avatar
+    : '/img/avatar_placeholder.png';
   avatar?.classList.remove('hidden');
+  avatar.addEventListener('click', () =>
+    openDialog(document.getElementById('userModal') as HTMLDialogElement)
+  );
   const username = document.getElementById('username');
+  username!.innerText = user.username;
   username?.classList.remove('hidden');
 
   logoutButton?.addEventListener('click', () => {

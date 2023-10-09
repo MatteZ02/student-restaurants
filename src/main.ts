@@ -3,7 +3,6 @@ import RestaurantApiWrapper, {User} from './restaurantApiWrapper';
 import {getCurrentLocation} from './functions/getCurrentLocation';
 import {filterRestaurants} from './functions/filterRestaurants';
 import {loggedIn} from './functions/login';
-import config from './config';
 import {showRestaurants} from './functions/showRestaurants';
 import {loginModalController} from './controllers/loginModalController';
 import {restaurantModalController} from './controllers/restaurantModalController';
@@ -77,31 +76,24 @@ leaflet
 (async () => {
   let user: User | null = null;
   if (localStorage.getItem('token')) {
-    const getUser = await restaurantApiWrapper
+    const userData = await restaurantApiWrapper
       .getUser(localStorage.getItem('token') as string)
       .catch(() => {});
-    if (getUser) loggedIn(getUser);
-    user = getUser ?? null;
+    if (userData) loggedIn(userData);
+    user = userData ?? null;
   }
 
   const restaurants = await restaurantApiWrapper.getRestaurants();
-  const location = await getCurrentLocation();
-  const {latitude, longitude} = location.coords;
-  map.setView([latitude, longitude], 10);
-
-  if (user) {
-    const avatar = document.getElementById('avatar') as HTMLImageElement;
-    if (!avatar) return;
-    avatar.classList.remove('hidden');
-    avatar.src = config.uploadUrl + user.avatar;
-    avatar.addEventListener('click', () =>
-      openDialog(document.getElementById('userModal') as HTMLDialogElement)
-    );
-    const username = document.getElementById('username');
-    if (!username) return;
-    username.classList.remove('hidden');
-    username.innerText = user.username;
-  }
+  const firstRestaurant =
+    restaurants.find(
+      restaurant => restaurant._id === user?.favouriteRestaurant
+    ) ?? restaurants[0];
+  const location = await getCurrentLocation().catch(() => {});
+  const coords = location?.coords ?? {
+    latitude: firstRestaurant.location.coordinates[1],
+    longitude: firstRestaurant.location.coordinates[0],
+  };
+  map.setView([coords.latitude, coords.longitude], 10);
 
   const filter = document.getElementById('filter') as
     | HTMLSelectElement
@@ -116,11 +108,11 @@ leaflet
     });
     showRestaurants(
       filterRestaurants(restaurants, filter?.value ?? 'none'),
-      location,
+      coords,
       user
     );
   });
-  showRestaurants(restaurants, location, user);
+  showRestaurants(restaurants, coords, user);
 })();
 
 // modals

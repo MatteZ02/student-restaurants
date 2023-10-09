@@ -3,6 +3,7 @@
   --background-alt: #949494;
   --text-primary: #333;
   --text-alt: #666;
+  --accent-color: rgb(0, 255, 157);
 }
 
 [data-theme='dark'] {

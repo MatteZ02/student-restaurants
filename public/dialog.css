@@ -33,7 +33,7 @@ dialog p {
 }
 
 dialog button {
-  margin: 1rem 0;
+  margin: 1rem 0.5rem;
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 0.25rem;
@@ -41,6 +41,10 @@ dialog button {
   color: var(--text-primary);
   cursor: pointer;
   transition: 0.1s ease-in-out;
+}
+
+dialog button:hover {
+  background-color: var(--accent-color);
 }
 
 dialog#restaurantModal ul {
@@ -92,7 +96,10 @@ dialog#registerModal #registerError,
 dialog#userModal #updateError {
   width: 100%;
   margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
   background-color: red;
+  box-shadow: 0 0 5px red;
+  border-radius: 5px;
 }
 
 dialog#loginModal #loginError p,
