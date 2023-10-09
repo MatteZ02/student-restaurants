@@ -3,7 +3,7 @@
 @import './side-nav.css';
 
 body {
-  font-family: 'Fira-Sans', sans-serif;
+  font-family: 'Fira-Sans-Regular', sans-serif;
   font-size: 16px;
   line-height: 1.5;
   color: var(--text-primary);
@@ -30,7 +30,8 @@ nav.top-nav {
   border-bottom: var(--background-alt) 1px solid;
 }
 
-nav.top-nav span {
+nav.top-nav span,
+nav.side-nav span {
   cursor: pointer;
 }
 
