@@ -1,16 +1,16 @@
 {
-    "theme_color": "#00ff9d",
-    "background_color": "#333",
-    "display": "standalone",
-    "scope": "./",
-    "start_url": "./index.html",
-    "name": "Feastly",
-    "short_name": "Feastly",
-    "icons": [
-      {
-        "src": "img/logo.png",
-        "sizes": "200x200",
-        "type": "image/png"
-      }
-    ]
-  }
+  "theme_color": "#00ff9d",
+  "background_color": "#333",
+  "display": "standalone",
+  "scope": "./",
+  "start_url": "./index.html",
+  "name": "Feastly",
+  "short_name": "Feastly",
+  "icons": [
+    {
+      "src": "img/logo.png",
+      "sizes": "200x200",
+      "type": "image/png"
+    }
+  ]
+}

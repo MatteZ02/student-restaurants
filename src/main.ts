@@ -36,6 +36,12 @@ const toggleTheme = () => {
 
 document.getElementById('theme')?.addEventListener('click', toggleTheme);
 
+const closeSideNav = () => {
+  sideNav?.removeAttribute('open');
+  mapElement?.classList.remove('hidden');
+  sideNavButton!.innerText = 'arrow_back';
+};
+
 const mapElement = document.getElementById('map');
 const sideNav = document.getElementsByClassName('side-nav')[0];
 const sideNavButton = document.getElementById('side-nav-arrow');
@@ -43,9 +49,7 @@ sideNavButton?.addEventListener('click', () => {
   const open = sideNav?.getAttribute('open');
   switch (open) {
     case 'true':
-      sideNav?.removeAttribute('open');
-      mapElement?.classList.remove('hidden');
-      sideNavButton!.innerText = 'arrow_back';
+      closeSideNav();
       break;
     default:
       sideNav?.setAttribute('open', 'true');
@@ -157,4 +161,4 @@ registerModalController(registerModal);
 const userModal = document.getElementById('userModal') as HTMLDialogElement;
 userModalController(userModal);
 
-export {openDialog, closeDialog, restaurantApiWrapper, map};
+export {openDialog, closeDialog, restaurantApiWrapper, map, closeSideNav};

@@ -1,12 +1,12 @@
 import * as leaflet from 'leaflet';
 import {restaurantModalComponent} from '../components/restaurantModalComponent';
-import {map, openDialog} from '../main';
+import {closeSideNav, map, openDialog} from '../main';
 import {Restaurant, User} from '../restaurantApiWrapper';
 import {Restaurants} from '../restaurantApiWrapper/classes/Restaurant';
 import {restaurantListComponent} from '../components/restaurantListComponent';
 
 const marker_alt = new leaflet.Icon({
-  iconUrl: '/icons/marker-alt.png',
+  iconUrl: './icons/marker-alt.png',
 });
 const marker_default = new leaflet.Icon.Default();
 
@@ -70,6 +70,7 @@ const showRestaurants = (
 
     const restaurantListItem = restaurantListComponent(restaurant, user);
     restaurantListItem.addEventListener('click', () => {
+      closeSideNav();
       map.setView([latitude, longitude], 15);
       openRestaurantModal(restaurant);
     });
