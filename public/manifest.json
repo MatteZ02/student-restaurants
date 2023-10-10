@@ -8,8 +8,8 @@
   "short_name": "Feastly",
   "icons": [
     {
-      "src": "img/logo.png",
-      "sizes": "200x200",
+      "src": "icons/favicon.png",
+      "sizes": "70x70",
       "type": "image/png"
     }
   ]
