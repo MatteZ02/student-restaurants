@@ -107,3 +107,10 @@ dialog#registerModal #registerError p,
 dialog#userModal #updateError p {
   margin-bottom: 0;
 }
+
+@media only screen and (max-width: 400px) {
+  dialog {
+    width: 100%;
+    margin: 0;
+  }
+}
