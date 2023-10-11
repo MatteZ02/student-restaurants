@@ -10,6 +10,12 @@
     {
       "src": "icons/favicon.png",
       "sizes": "70x70",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "img/logo.png",
+      "sizes": "200x200",
       "type": "image/png"
     }
   ]
